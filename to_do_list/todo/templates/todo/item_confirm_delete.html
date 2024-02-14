@@ -1,7 +1,8 @@
 {% extends "todo/base.html" %}
 {% block content %}
+<hr>
     <div class="content-section">
-        <a href="{% url 'item-list' %}">Volver atrás</a>
+        <a href="{% url 'item-list' %}">&#8592; Atrás</a>
         <form method="POST">
             {% csrf_token %}    <!--cross site request forgery token -->
             <fieldset class="form-group">

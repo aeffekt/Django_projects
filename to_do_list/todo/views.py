@@ -39,8 +39,7 @@ class ItemListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['items'] = context['items'].filter(user=self.request.user)
-        context['items'] = context['items'].filter(done_status=False)
+        context['items'] = context['items'].filter(user=self.request.user)        
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['items'] = context['items'].filter(title__contains=search_input)
@@ -60,7 +59,7 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
 
 class ItemUpdateView(LoginRequiredMixin, UpdateView):
     model = Item
-    fields = '__all__'
+    fields = {'title', 'description', 'done_status'}
     success_url = reverse_lazy('item-list')
 
 

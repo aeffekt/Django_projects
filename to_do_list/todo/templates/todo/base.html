@@ -1,8 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/style.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+
+
     {% if title %}
         <title>{{ title }}</title>
     {% else %}
@@ -10,7 +16,19 @@
     {% endif %}
 </head>
 <body>
-    {% block content %}
-    {% endblock %}
+    <div class="header-bar">
+        {% if request.user.is_authenticated %}
+            <div>
+                <h1>Hola, {{ request.user|title }}</h1>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </div>        
+        {% endif %}    
+    </div>    
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>    
 </body>
 </html>

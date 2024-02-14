@@ -1,10 +1,13 @@
 {% extends "todo/base.html" %}
 {% block content %}
-    <div class="content-section">
+    <div class="card-body">
         <form method="POST">
             {% csrf_token %}    <!--cross site request forgery token -->
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Registrarse</legend>
+                <div class="header-bar">
+                    <legend class="border-bottom mb-4">Registrarse</legend>
+                </div>
+                
                 {{ form }}
             </fieldset>
             <div class="form-group">

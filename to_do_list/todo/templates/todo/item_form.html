@@ -1,10 +1,13 @@
 {% extends 'todo/base.html' %}
 {% block content %}
-    <a href="{% url 'item-list' %}">Volver atrás</a>
-    <h1>Agregar tarea a realizar</h1>
-    <form method="POST">
+<hr>
+<a href="{% url 'item-list' %}">&#8592; Atrás</a>
+<div class="card-body">
+    <form method="POST" action="">
         {% csrf_token %}
         {{form.as_p}}
-        <input type="submit">
+        <input class="button" type="submit" value="Aceptar">
     </form>
+</div>    
+
 {% endblock %}

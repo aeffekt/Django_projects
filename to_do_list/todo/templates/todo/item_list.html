@@ -1,44 +1,39 @@
 {% extends 'todo/base.html' %}
-{% block content %}
-    {% if request.user.is_authenticated %}
-        <p>{{ request.user}}</p>
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
-        
-    {% else %}
-        <a class="btn btn-outline-info" href="{% url 'login' %}">Login</a>
-    {% endif %}
-    <hr>
-    <h1>Lista de tareas a realizar</h1>
-    <a class="btn btn-outline-info" href="{% url 'item-create' %}">Agregar tarea</a>
+{% block content %}       
     <hr>
     <div id="search-add-wrapper">
         <form method="GET" style="display: flex;">
             <input type='text' name='search-area' placeholder="Buscar tarea..." value="{{search_input}}">
             <input class="button" type="submit" value='Buscar'>
         </form>
-        {% if tasks|length > 0 %}
-        <a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
+        {% if items|length > 0 %}
+            <a id="add-link" href="{% url 'item-create' %}" title="Crear tarea nueva">&#x2b;</a>
         {% endif %}
+    </div>    
+    
+    <div id="itemlist" class="item-items-wrapper">
+        {% for item in items %}        
+            <div class="item-wrapper" data-position="{{item.pk}}">
+                <div class="item-title">
+                    {% if item.done_status %}
+                        <div class="item-complete-icon"></div>
+                        <i><s><a href="{% url 'item-update' item.id %}">{{item}}</a></s></i> 
+                    {% else %}
+                        <div class="item-incomplete-icon"></div>
+                        <a href="{% url 'item-update' item.id %}">{{item}}</a> 
+                    {% endif %}
+                </div>
+                <div class="item-controls">
+                    <a class="delete-link" href="{% url 'item-delete' item.id %}">&#215;</a>
+                    <span class="handle">&nbsp;&#10247;</span>
+                </div>
+            </div>        
+        {% empty %}
+            <div style="text-align: center; padding-bottom: 10px; line-height: 1em;">
+                <h3>No hay nuevos items.</h3>
+                <h3>Crear <a style="text-decoration: none; color: #e53935;" href="{% url 'item-create' %}">nuevo Item</a> ! </h3>
+            </div>
+        {% endfor %}
     </div>
     
-    {% if items|length > 0 %}
-        <table>
-            <tr>
-                <th>Item</th>
-                <th></th>
-            </tr>
-        {% for item in items %}            
-                <tr>
-                    <td>{{item.title}}</td>                    
-                    <td><a href="{% url 'item-update' item.id %}">Editar</a></td>
-                    <td><a href="{% url 'item-delete' item.id %}">Eliminar</a></td>
-                </tr>            
-        {% endfor %}
-        </table>
-    {% else %}
-        <h3>No hay elementos en la lista.</h3>        
-    {% endif %}
 {% endblock %}

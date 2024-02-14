@@ -10,9 +10,6 @@ class Item(models.Model):
     date_done = models.DateTimeField(auto_now=True)
     done_status = models.BooleanField(default=False)
 
-    def make_done(self):
-        self.done_status=True
-
     def __str__(self):        
         return self.title
     
