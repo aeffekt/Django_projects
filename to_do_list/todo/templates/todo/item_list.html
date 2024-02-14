@@ -1,20 +1,30 @@
 {% extends 'todo/base.html' %}
 {% block content %}
+    {% if request.user.is_authenticated %}
+        <p>{{ request.user}}</p>
+        <a class="btn btn-outline-info" href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <a class="btn btn-outline-info" href="{% url 'login' %}">Login</a>
+    {% endif %}
+    <hr>
     <h1>Lista de tareas a realizar</h1>
-    <a href="#">Agregar tarea</a>
+    <a class="btn btn-outline-info" href="{% url 'item-create' %}">Agregar tarea</a>
+    <hr>
     <table>
         <tr>
             <th>Item</th>
             <th></th>
-        </tr>
-        {% for item in items %}
+        </tr>    
+    {% for item in items %}
+        
             <tr>
                 <td>{{item.title}}</td>
                 <td><a href="{% url 'item-detail' item.id %}">Ver</a></td>
+                <td><a href="{% url 'item-update' item.id %}">Editar</a></td>
+                <td><a href="{% url 'item-delete' item.id %}">Eliminar</a></td>
             </tr>
-        {% empty %}
-            <h3>No hay elementos en la lista.</h3>
-        {% endfor %}
-                
-    </table>
+        </table>
+    {% empty %}
+        <h3>No hay elementos en la lista.</h3>
+    {% endfor %}
 {% endblock %}

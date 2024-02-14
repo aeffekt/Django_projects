@@ -1,0 +1,10 @@
+{% extends 'todo/base.html' %}
+{% block content %}
+    <a href="{% url 'item-list' %}">Volver atrás</a>
+    <h1>Agregar tarea a realizar</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit">
+    </form>
+{% endblock %}
