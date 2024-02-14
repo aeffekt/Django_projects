@@ -1,7 +1,9 @@
 from .models import Item
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -12,6 +14,18 @@ class CustomLoginView(LoginView):
 
     def get_success_url(self) -> str:
         return reverse_lazy('item-list')
+
+
+class RegisterView(FormView):
+    template_name = "todo/register.html"
+    form_class = UserCreationForm
+    success_url = reverse_lazy('item-list')
+
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return super(RegisterView, self).form_valid(form)
 
 
 class ItemDetailView(LoginRequiredMixin, DetailView):
@@ -27,6 +41,10 @@ class ItemListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['items'] = context['items'].filter(user=self.request.user)
         context['items'] = context['items'].filter(done_status=False)
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['items'] = context['items'].filter(title__contains=search_input)
+        context['search_input'] = search_input
         return context
 
 
