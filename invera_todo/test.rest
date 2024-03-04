@@ -1,0 +1,21 @@
+# se puede usar "REST Client" en VSC para usar este archivo 
+
+
+POST http://127.0.0.1:8000/users/ 
+Content-Type: application/json
+
+{ "username": "Turko", "password": "admin" }
+
+###
+
+POST http://127.0.0.1:8000/login/
+Content-Type: application/json
+
+{ "username": "Turko", "password": "admin" }
+
+
+###
+
+GET http://127.0.0.1:8000/test_token
+Content-Type: application/json 
+Authorization: token xxx
