@@ -1,21 +1,36 @@
 # se puede usar "REST Client" en VSC para usar este archivo 
 
-
+# CREAR USUARIO
 POST http://127.0.0.1:8000/users/ 
 Content-Type: application/json
-
-{ "username": "Turko", "password": "admin" }
+{ "username": "user1", "password": "admin" }
 
 ###
-
-POST http://127.0.0.1:8000/login/
+# AUTENTICACION
+POST http://127.0.0.1:8000/token/
 Content-Type: application/json
-
 { "username": "Turko", "password": "admin" }
 
 
 ###
+# CREAR TAREA
+POST http://127.0.0.1:8000/tasks/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NjUxNzg5LCJpYXQiOjE3MDk2NDkwODksImp0aSI6ImYxMGIxOWM0ODNjODRhZmQ5NTVlZWJjODU1MGNiMjE0IiwidXNlcl9pZCI6Mn0.JS7ZyzC6BInss4oxaNznISEi9O4srgcOjUrxksPglEE
 
-GET http://127.0.0.1:8000/test_token
-Content-Type: application/json 
-Authorization: token xxx
+{
+    "title": "Añadir tarea #4",
+    "description": "Tarea registrada con REST client"
+}
+
+###
+# LISTAR TAREAS 
+GET http://127.0.0.1:8000/tasks/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NjUxNzg5LCJpYXQiOjE3MDk2NDkwODksImp0aSI6ImYxMGIxOWM0ODNjODRhZmQ5NTVlZWJjODU1MGNiMjE0IiwidXNlcl9pZCI6Mn0.JS7ZyzC6BInss4oxaNznISEi9O4srgcOjUrxksPglEE
+
+###
+# FILTRAR TAREAS POR TITULO,DESCRIPCION Y FECHA
+GET http://127.0.0.1:8000/tasks/?query=&date=2024-03-05
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NjUxNzg5LCJpYXQiOjE3MDk2NDkwODksImp0aSI6ImYxMGIxOWM0ODNjODRhZmQ5NTVlZWJjODU1MGNiMjE0IiwidXNlcl9pZCI6Mn0.JS7ZyzC6BInss4oxaNznISEi9O4srgcOjUrxksPglEE
