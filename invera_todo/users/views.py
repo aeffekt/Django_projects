@@ -1,12 +1,11 @@
-from rest_framework import viewsets, views
+from rest_framework import viewsets
 from .serializers import UserSerializer
 from django.contrib.auth.models import User
-from django.contrib.auth import logout
-
-from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
-from django.contrib.auth import authenticate
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -14,21 +13,18 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class LoginView(views.APIView):
-    authentication_classes = [TokenAuthentication]
+class LogoutViewSet(viewsets.ViewSet):    
+    permission_classes = (IsAuthenticated,)
 
-    def post(self, request):
-        # Your authentication logic here
-        user = authenticate(username=request.data['username'], password=request.data['password'])
-        if user:
-            token, created = Token.objects.get_or_create(user=user)
-            user_serialized = UserSerializer(user)
-            return Response({'token': token.key, 'user': user_serialized.data})
-        else:
-            return Response({'error': 'Invalid credentials'}, status=401)
-    
-
-class LogoutView(views.APIView):
-    def get(self, request):        
-        logout(request)
-        return Response({'message': 'Logout exitoso'})
+    @action(detail=False, methods=['post'])
+    def logout(self, request):
+        if self.request.data.get('all'):
+            tokens = OutstandingToken.objects.filter(user=request.user)
+            for token in tokens:
+                _, _ = BlacklistedToken.objects.get_or_create(token=token)
+            return Response({"status": "OK, goodbye, all refresh tokens blacklisted"})
+        
+        refresh_token = self.request.data.get('refresh_token')
+        token = RefreshToken(token=refresh_token)
+        token.blacklist()
+        return Response({"status": "OK, goodbye"})
