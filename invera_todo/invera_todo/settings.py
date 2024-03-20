@@ -20,8 +20,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # external
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    "drf_spectacular",
+    # internal
     'users',
     'to_do',
     'django.contrib.admin',
@@ -33,6 +36,7 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
     'DEFAULT_PERMISSION_CLASSES': [
@@ -41,6 +45,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "REST API Invera Challenge",
+    "VERSION": "0.1.0"
 }
 
 SIMPLE_JWT = {
@@ -61,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'invera_todo.urls'
 

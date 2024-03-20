@@ -19,9 +19,7 @@ class TaskViewSet(viewsets.ModelViewSet):
                     queryset = queryset.filter(created__date=date)
         if query:
             queryset = queryset.filter(title__icontains=query)
-
         return queryset
-    
     
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
