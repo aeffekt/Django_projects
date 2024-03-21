@@ -1,159 +1,159 @@
 openapi: 3.0.3
 info:
-  title: REST API Invera Challenge
+  title: REST API Challenge
   version: 0.1.0
 paths:
   /logout/:
     post:
       operationId: logout_create
       tags:
-      - logout
+        - logout
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '200':
+        "200":
           description: No response body
   /tasks/:
     get:
       operationId: tasks_list
       parameters:
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
       tags:
-      - tasks
+        - tasks
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedTaskList'
-          description: ''
+                $ref: "#/components/schemas/PaginatedTaskList"
+          description: ""
     post:
       operationId: tasks_create
       tags:
-      - tasks
+        - tasks
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TaskCreate'
+              $ref: "#/components/schemas/TaskCreate"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TaskCreate'
+              $ref: "#/components/schemas/TaskCreate"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TaskCreate'
+              $ref: "#/components/schemas/TaskCreate"
         required: true
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '201':
+        "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TaskCreate'
-          description: ''
+                $ref: "#/components/schemas/TaskCreate"
+          description: ""
   /tasks/{id}/:
     get:
       operationId: tasks_retrieve
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
       tags:
-      - tasks
+        - tasks
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Task'
-          description: ''
+                $ref: "#/components/schemas/Task"
+          description: ""
     put:
       operationId: tasks_update
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
       tags:
-      - tasks
+        - tasks
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TaskCreate'
+              $ref: "#/components/schemas/TaskCreate"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TaskCreate'
+              $ref: "#/components/schemas/TaskCreate"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TaskCreate'
+              $ref: "#/components/schemas/TaskCreate"
         required: true
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TaskCreate'
-          description: ''
+                $ref: "#/components/schemas/TaskCreate"
+          description: ""
     patch:
       operationId: tasks_partial_update
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
       tags:
-      - tasks
+        - tasks
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedTaskCreate'
+              $ref: "#/components/schemas/PatchedTaskCreate"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedTaskCreate'
+              $ref: "#/components/schemas/PatchedTaskCreate"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedTaskCreate'
+              $ref: "#/components/schemas/PatchedTaskCreate"
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TaskCreate'
-          description: ''
+                $ref: "#/components/schemas/TaskCreate"
+          description: ""
     delete:
       operationId: tasks_destroy
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
       tags:
-      - tasks
+        - tasks
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '204':
+        "204":
           description: No response body
   /token/:
     post:
@@ -162,26 +162,26 @@ paths:
         Takes a set of user credentials and returns an access and refresh JSON web
         token pair to prove the authentication of those credentials.
       tags:
-      - token
+        - token
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TokenObtainPair'
+              $ref: "#/components/schemas/TokenObtainPair"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TokenObtainPair'
+              $ref: "#/components/schemas/TokenObtainPair"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TokenObtainPair'
+              $ref: "#/components/schemas/TokenObtainPair"
         required: true
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenObtainPair'
-          description: ''
+                $ref: "#/components/schemas/TokenObtainPair"
+          description: ""
   /token/refresh/:
     post:
       operationId: token_refresh_create
@@ -189,177 +189,177 @@ paths:
         Takes a refresh type JSON web token and returns an access type JSON web
         token if the refresh token is valid.
       tags:
-      - token
+        - token
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TokenRefresh'
+              $ref: "#/components/schemas/TokenRefresh"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TokenRefresh'
+              $ref: "#/components/schemas/TokenRefresh"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TokenRefresh'
+              $ref: "#/components/schemas/TokenRefresh"
         required: true
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenRefresh'
-          description: ''
+                $ref: "#/components/schemas/TokenRefresh"
+          description: ""
   /users/:
     get:
       operationId: users_list
       parameters:
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
       tags:
-      - users
+        - users
       security:
-      - jwtAuth: []
-      - {}
+        - jwtAuth: []
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedUserList'
-          description: ''
+                $ref: "#/components/schemas/PaginatedUserList"
+          description: ""
     post:
       operationId: users_create
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
         required: true
       security:
-      - jwtAuth: []
-      - {}
+        - jwtAuth: []
+        - {}
       responses:
-        '201':
+        "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-          description: ''
+                $ref: "#/components/schemas/User"
+          description: ""
   /users/{id}/:
     get:
       operationId: users_retrieve
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this user.
+          required: true
       tags:
-      - users
+        - users
       security:
-      - jwtAuth: []
-      - {}
+        - jwtAuth: []
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-          description: ''
+                $ref: "#/components/schemas/User"
+          description: ""
     put:
       operationId: users_update
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this user.
+          required: true
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
         required: true
       security:
-      - jwtAuth: []
-      - {}
+        - jwtAuth: []
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-          description: ''
+                $ref: "#/components/schemas/User"
+          description: ""
     patch:
       operationId: users_partial_update
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this user.
+          required: true
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedUser'
+              $ref: "#/components/schemas/PatchedUser"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedUser'
+              $ref: "#/components/schemas/PatchedUser"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedUser'
+              $ref: "#/components/schemas/PatchedUser"
       security:
-      - jwtAuth: []
-      - {}
+        - jwtAuth: []
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-          description: ''
+                $ref: "#/components/schemas/User"
+          description: ""
     delete:
       operationId: users_destroy
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this user.
+          required: true
       tags:
-      - users
+        - users
       security:
-      - jwtAuth: []
-      - {}
+        - jwtAuth: []
+        - {}
       responses:
-        '204':
+        "204":
           description: No response body
 components:
   schemas:
@@ -382,7 +382,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/Task'
+            $ref: "#/components/schemas/Task"
     PaginatedUserList:
       type: object
       properties:
@@ -402,7 +402,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/User'
+            $ref: "#/components/schemas/User"
     PatchedTaskCreate:
       type: object
       properties:
@@ -419,7 +419,8 @@ components:
       properties:
         username:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+          description:
+            Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
@@ -454,9 +455,9 @@ components:
           type: integer
           nullable: true
       required:
-      - created
-      - id
-      - title
+        - created
+        - id
+        - title
     TaskCreate:
       type: object
       properties:
@@ -469,7 +470,7 @@ components:
         done_status:
           type: boolean
       required:
-      - title
+        - title
     TokenObtainPair:
       type: object
       properties:
@@ -486,10 +487,10 @@ components:
           type: string
           readOnly: true
       required:
-      - access
-      - password
-      - refresh
-      - username
+        - access
+        - password
+        - refresh
+        - username
     TokenRefresh:
       type: object
       properties:
@@ -499,14 +500,15 @@ components:
         refresh:
           type: string
       required:
-      - access
-      - refresh
+        - access
+        - refresh
     User:
       type: object
       properties:
         username:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+          description:
+            Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
@@ -520,8 +522,8 @@ components:
           writeOnly: true
           maxLength: 128
       required:
-      - password
-      - username
+        - password
+        - username
   securitySchemes:
     jwtAuth:
       type: http

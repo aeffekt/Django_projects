@@ -48,7 +48,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "REST API Invera Challenge",
+    "TITLE": "REST API Challenge",
     "VERSION": "0.1.0"
 }
 
