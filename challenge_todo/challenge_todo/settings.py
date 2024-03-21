@@ -72,7 +72,7 @@ MIDDLEWARE = [
 ]
 
 
-ROOT_URLCONF = 'invera_todo.urls'
+ROOT_URLCONF = 'challenge_todo.urls'
 
 TEMPLATES = [
     {
@@ -90,7 +90,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'invera_todo.wsgi.application'
+WSGI_APPLICATION = 'challenge_todo.wsgi.application'
 
 
 # Database

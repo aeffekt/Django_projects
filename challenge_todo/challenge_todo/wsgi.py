@@ -1,5 +1,5 @@
 """
-WSGI config for invera_todo project.
+WSGI config for challenge_todo project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'invera_todo.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'challenge_todo.settings')
 
 application = get_wsgi_application()
