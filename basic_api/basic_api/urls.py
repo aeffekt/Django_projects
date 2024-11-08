@@ -10,6 +10,6 @@ router.register(r'tasks', views.TaskViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),     # se incluye el router
-    path('api-auth/', include('rest_framework.urls')),
+    path('api_auth/', include('rest_framework.urls')),
     #path('api/', include('api.urls')), #--> route de model view
 ]
