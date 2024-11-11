@@ -25,6 +25,13 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'rest_framework',
     'drf_spectacular',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',        
+    'allauth.socialaccount',    # Optional -- requires install using `django-allauth[socialaccount]`.
+    'allauth.mfa',              # Optional -- requires install using `django-allauth[mfa]`.
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -35,6 +42,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 REST_FRAMEWORK = {
@@ -120,3 +128,32 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [        
+        # Needed to login by username in Django admin, regardless of `allauth`
+        'django.contrib.auth.backends.ModelBackend',
+
+        # `allauth` specific authentication methods, such as login by email
+        'allauth.account.auth_backends.AuthenticationBackend',        
+    ]
+
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_UNIQUE_EMAIL = True
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+'google': {
+    'SCOPE': [
+        'profile',
+        'email',
+    ],
+    'AUTH_PARAMS': {
+        'access_type': 'online',
+    },
+    'OAUTH_PKCE_ENABLED': True,
+    }
+}
+
+ACCOUNT_ADAPTER = 'users.adapters.MyAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'users.adapters.MySocialAccountAdapter'
