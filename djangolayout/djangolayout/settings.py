@@ -155,5 +155,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+LOGIN_REDIRECT_URL = '/users/'  # Cambia esta URL a donde desees redirigir al usuario
+LOGOUT_REDIRECT_URL = '/' 
+
 ACCOUNT_ADAPTER = 'users.adapters.MyAccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'users.adapters.MySocialAccountAdapter'
